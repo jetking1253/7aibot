@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useEffect } from 'react'
 import { Send, Plus, MessageSquare } from 'lucide-react'
-import { useChat } from 'ai/react'
+import { useChat, Message } from 'ai/react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import rehypeHighlight from 'rehype-highlight'
@@ -13,7 +13,7 @@ interface Chat {
   title: string
   lastMessage: string
   timestamp: string
-  messages: { role: 'user' | 'assistant'; content: string }[]
+  messages: Message[]
 }
 
 export default function ChatPage() {
