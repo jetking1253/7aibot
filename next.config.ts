@@ -1,7 +1,6 @@
-import type { NextConfig } from "next";
+/** @type {import('next').Config} */
+const config = {
+  // 配置内容
+}
 
-const nextConfig: NextConfig = {
-  /* config options here */
-};
-
-export default nextConfig;
+module.exports = config
