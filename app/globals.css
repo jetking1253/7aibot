@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.markdown-body {
+  @apply text-gray-800;
+}
+
+.markdown-body h1 {
+  @apply text-2xl font-bold mb-4 mt-6 pb-2 border-b;
+}
+
+.markdown-body h2 {
+  @apply text-xl font-bold mb-3 mt-5;
+}
+
+.markdown-body h3 {
+  @apply text-lg font-bold mb-2 mt-4;
+}
+
+.markdown-body p {
+  @apply mb-4 leading-relaxed;
+}
+
+.markdown-body ul {
+  @apply list-disc pl-5 mb-4;
+}
+
+.markdown-body ol {
+  @apply list-decimal pl-5 mb-4;
+}
+
+.markdown-body li {
+  @apply mb-1;
+}
+
+.markdown-body code {
+  @apply px-1 py-0.5 bg-gray-100 rounded text-sm font-mono;
+}
+
+.markdown-body pre {
+  @apply p-4 bg-gray-900 rounded-lg mb-4 overflow-x-auto;
+}
+
+.markdown-body pre code {
+  @apply bg-transparent p-0 text-white;
+}
+
+.markdown-body blockquote {
+  @apply pl-4 border-l-4 border-gray-200 text-gray-600 italic my-4;
+}
+
+.markdown-body table {
+  @apply w-full border-collapse mb-4;
+}
+
+.markdown-body th,
+.markdown-body td {
+  @apply border px-4 py-2;
+}
+
+.markdown-body th {
+  @apply bg-gray-50;
+}
