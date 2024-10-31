@@ -2,7 +2,7 @@ import OpenAI from 'openai';
 import { OpenAIStream, StreamingTextResponse } from 'ai';
 
 const openai = new OpenAI({
-  apiKey: 'sk-473731e1dfe44ae99806aee9c4ed95a6',
+  apiKey: '********',
   baseURL: 'https://api.deepseek.com'
 });
 
