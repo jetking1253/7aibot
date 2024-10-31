@@ -1,8 +1,15 @@
 import OpenAI from 'openai';
 import { OpenAIStream, StreamingTextResponse } from 'ai';
 
+// 从环境变量获取 API 密钥
+const apiKey = process.env.DEEPSEEK_API_KEY
+
+if (!apiKey) {
+  throw new Error('DEEPSEEK_API_KEY is not defined in environment variables')
+}
+
 const openai = new OpenAI({
-  apiKey: '********',
+  apiKey: apiKey,
   baseURL: 'https://api.deepseek.com'
 });
 
@@ -19,7 +26,7 @@ export async function POST(req: Request) {
     model: 'deepseek-chat',
     messages: [systemMessage, ...messages],
     stream: true,
-    temperature: 0.7, // 添加适当的温度参数，使回答更加灵活自然
+    temperature: 0.7,
   });
 
   const stream = OpenAIStream(response);
