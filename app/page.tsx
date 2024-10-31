@@ -230,13 +230,12 @@ export default function ChatPage() {
                         remarkPlugins={[remarkGfm]}
                         rehypePlugins={[rehypeHighlight]}
                         className={`prose ${
-                          message.role === 'user' ? 'prose-invert' : 'prose-gray'
+                          message.role === 'assistant' ? 'prose-gray' : 'prose-invert'
                         } max-w-none`}
                         components={{
-                          code: (props) => {
-                            const { inline, className, children } = props;
+                          code({ children, className, ...props }) {
                             const match = /language-(\w+)/.exec(className || '')
-                            return !inline && match ? (
+                            return match ? (
                               <div className="relative group">
                                 <div className="absolute right-2 top-2 opacity-0 group-hover:opacity-100">
                                   <button
