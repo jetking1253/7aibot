@@ -7,6 +7,7 @@ const geistSans = localFont({
   variable: "--font-geist-sans",
   weight: "100 900",
 });
+
 const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
@@ -14,7 +15,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: '7aibot',
+  title: 'aibot',
   description: '智能AI助手',
   icons: {
     icon: '/favicon.ico',
@@ -33,7 +34,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="zh">
+    <html lang="zh" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>{children}</body>
     </html>
   )

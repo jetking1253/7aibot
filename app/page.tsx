@@ -91,7 +91,7 @@ export default function ChatPage() {
     ))
   }
 
-  const startResizing = useCallback((mouseDownEvent: React.MouseEvent) => {
+  const startResizing = useCallback(() => {
     setIsResizing(true)
   }, [])
 
@@ -211,8 +211,7 @@ export default function ChatPage() {
                           message.role === 'user' ? 'prose-invert' : 'prose-gray'
                         } max-w-none`}
                         components={{
-                          // 自定义代码块样式
-                          code({ node, inline, className, children, ...props }) {
+                          code({ inline, className, children, ...props }) {
                             const match = /language-(\w+)/.exec(className || '')
                             return !inline && match ? (
                               <div className="relative group">
