@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useCallback, useEffect } from 'react'
-import { Send, Plus, MessageSquare } from 'lucide-react'
+import { Send, Plus, MessageSquare, Trash2 } from 'lucide-react'
 import { useChat, Message } from 'ai/react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
@@ -29,16 +29,7 @@ export default function ChatPage() {
   ])
   
   const { messages, input, handleInputChange, handleSubmit: handleChatSubmit, setMessages, isLoading } = useChat({
-    initialMessages: chats.find(chat => chat.id === activeChat)?.messages || [],
-    initialSystemMessage: `你是一个智能AIBOT助手。在回答问题时，你必须：
-1. 严格遵守中华人民共和国的法律法规
-2. 不讨论政治敏感话题
-3. 不传播虚假或未经证实的信息
-4. 拒绝任何违法或不当的请求
-5. 提供准确、客观、有建设性的回答
-6. 如果不确定某个话题是否合适，应该礼貌地拒绝回答
-
-请用中文回复用户的问题。`
+    initialMessages: chats.find(chat => chat.id === activeChat)?.messages || []
   })
 
   const [sidebarWidth, setSidebarWidth] = useState(300)
@@ -121,6 +112,31 @@ export default function ChatPage() {
     }
   }, [resize, stopResizing])
 
+  const deleteChat = (chatId: string, e: React.MouseEvent) => {
+    e.stopPropagation()
+    if (chats.length === 1) {
+      const newChat: Chat = {
+        id: Date.now().toString(),
+        title: 'aibot1',
+        lastMessage: '你好，我能帮你什么？',
+        timestamp: '刚刚',
+        messages: []
+      }
+      setChats([newChat])
+      setActiveChat(newChat.id)
+      setMessages([])
+    } else {
+      setChats(prevChats => prevChats.filter(chat => chat.id !== chatId))
+      if (activeChat === chatId) {
+        const firstChat = chats.find(chat => chat.id !== chatId)
+        if (firstChat) {
+          setActiveChat(firstChat.id)
+          setMessages(firstChat.messages)
+        }
+      }
+    }
+  }
+
   return (
     <div className="flex h-screen">
       <aside 
@@ -142,7 +158,7 @@ export default function ChatPage() {
             <div
               key={chat.id}
               onClick={() => switchChat(chat.id)}
-              className={`p-3 hover:bg-gray-100 cursor-pointer flex items-center gap-3
+              className={`p-3 hover:bg-gray-100 cursor-pointer flex items-center gap-3 group
                 ${activeChat === chat.id ? 'bg-gray-100' : ''}`}
             >
               <MessageSquare className="text-gray-500" size={20} />
@@ -153,6 +169,12 @@ export default function ChatPage() {
                 </div>
               </div>
               <span className="text-xs text-gray-400">{chat.timestamp}</span>
+              <button
+                onClick={(e) => deleteChat(chat.id, e)}
+                className="opacity-0 group-hover:opacity-100 p-1 hover:bg-gray-200 rounded transition-all duration-200"
+              >
+                <Trash2 size={16} className="text-red-500" />
+              </button>
             </div>
           ))}
         </div>
@@ -211,7 +233,8 @@ export default function ChatPage() {
                           message.role === 'user' ? 'prose-invert' : 'prose-gray'
                         } max-w-none`}
                         components={{
-                          code({ inline, className, children, ...props }) {
+                          code: (props) => {
+                            const { inline, className, children } = props;
                             const match = /language-(\w+)/.exec(className || '')
                             return !inline && match ? (
                               <div className="relative group">
